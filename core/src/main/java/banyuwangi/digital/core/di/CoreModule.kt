@@ -11,6 +11,9 @@ import banyuwangi.digital.core.data.movie.repository.source.remote.network.Movie
 import banyuwangi.digital.core.data.people.repository.PeopleRepositoryImpl
 import banyuwangi.digital.core.data.people.repository.source.remote.PeopleRemoteDataSource
 import banyuwangi.digital.core.data.people.repository.source.remote.network.PeopleApiService
+import banyuwangi.digital.core.data.search.repository.SearchRepositoryImpl
+import banyuwangi.digital.core.data.search.repository.source.remote.SearchRemoteDataSource
+import banyuwangi.digital.core.data.search.repository.source.remote.network.SearchApiService
 import banyuwangi.digital.core.data.tv.repository.TvRepositoryImpl
 import banyuwangi.digital.core.data.tv.repository.source.remote.TvRemoteDataSource
 import banyuwangi.digital.core.data.tv.repository.source.remote.network.TvApiService
@@ -80,6 +83,15 @@ val networkModule = module {
             .build()
         retrofit.create(PeopleApiService::class.java)
     }
+
+    single {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(SearchApiService::class.java)
+    }
 }
 
 val repositoryModule = module {
@@ -88,10 +100,12 @@ val repositoryModule = module {
     single { CollectionRemoteDataSource(get()) }
     single { PeopleRemoteDataSource(get()) }
     single { MovieLocalDataSource(get()) }
+    single { SearchRemoteDataSource(get()) }
 
     single<MoviesRepository> { MovieRepositoryImpl(get()) }
     single<TvRepository> { TvRepositoryImpl(get()) }
     single<CollectionRepository> { CollectionRepositoryImpl(get()) }
     single<PeopleRepository> { PeopleRepositoryImpl(get()) }
     single<WatchlistRepository> { WatchlistRepositoryImpl(get()) }
+    single<SearchRepository> { SearchRepositoryImpl(get()) }
 }

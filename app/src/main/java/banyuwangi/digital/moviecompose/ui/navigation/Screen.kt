@@ -2,6 +2,7 @@ package banyuwangi.digital.moviecompose.ui.navigation
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
+    object Search : Screen("search")
     object Watchlist : Screen("watchlist")
     object Profile : Screen("profile")
     object DetailMovie : Screen("home/movie/{id}") {
@@ -15,4 +16,14 @@ sealed class Screen(val route: String) {
     object DetailPeople : Screen("home/people/{id}") {
         fun createRoute(id: Int) = "home/people/$id"
     }
+
+    object DetailSearch:Screen("search/{id}"){
+        fun createRoute(id:Int) = "search/$id"
+    }
+
+    object DetailWatchlist:Screen("watchlist/{id}"){
+        fun createRoute(id:Int) = "watchlist/$id"
+    }
+
+
 }

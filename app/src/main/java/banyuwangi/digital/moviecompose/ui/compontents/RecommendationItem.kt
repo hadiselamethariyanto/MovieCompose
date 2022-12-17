@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,7 +37,7 @@ fun RecommendationItem(
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .width(120.dp)
+                .fillMaxWidth()
                 .height(160.dp)
                 .clip(RoundedCornerShape(8.dp))
         )
@@ -51,13 +52,14 @@ fun RecommendationItem(
             modifier = modifier.fillMaxWidth()
         )
         Spacer(modifier = modifier.height(4.dp))
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = Icons.Rounded.Star,
                 contentDescription = null,
                 tint = purple100,
-                modifier = Modifier.size(14.dp)
+                modifier = Modifier.size(16.dp)
             )
+            Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = String.format("%.1f", rating),
                 fontFamily = gilroyMedium,

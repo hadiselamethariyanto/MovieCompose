@@ -7,6 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -29,6 +30,7 @@ import banyuwangi.digital.moviecompose.ui.screen.detail_people.DetailPeopleScree
 import banyuwangi.digital.moviecompose.ui.screen.detail_tv.DetailTvScreen
 import banyuwangi.digital.moviecompose.ui.screen.home.HomeScreen
 import banyuwangi.digital.moviecompose.ui.screen.profile.ProfileScreen
+import banyuwangi.digital.moviecompose.ui.screen.search.SearchScreen
 import banyuwangi.digital.moviecompose.ui.screen.watchlist.WatchlistScreen
 import banyuwangi.digital.moviecompose.ui.theme.MovieComposeTheme
 import banyuwangi.digital.moviecompose.ui.theme.green500
@@ -66,11 +68,22 @@ fun MovieComposeApp(
                     }
                 )
             }
+            composable(Screen.Search.route) {
+                SearchScreen(navigateToMovieDetail = { id ->
+                    navController.navigate(
+                        Screen.DetailSearch.createRoute(
+                            id
+                        )
+                    )
+                })
+            }
             composable(Screen.Profile.route) {
                 ProfileScreen()
             }
             composable(Screen.Watchlist.route) {
-                WatchlistScreen()
+                WatchlistScreen(navigateToMovieDetail = { id ->
+                    navController.navigate(Screen.DetailWatchlist.createRoute(id))
+                })
             }
             composable(
                 route = Screen.DetailMovie.route,
@@ -86,6 +99,22 @@ fun MovieComposeApp(
             ) {
                 val id = it.arguments?.getInt("id") ?: 0
                 DetailTvScreen(id = id)
+            }
+
+            composable(
+                route = Screen.DetailSearch.route,
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) {
+                val id = it.arguments?.getInt("id") ?: 0
+                DetailMovieScreen(id = id)
+            }
+
+            composable(
+                route = Screen.DetailWatchlist.route,
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) {
+                val id = it.arguments?.getInt("id") ?: 0
+                DetailMovieScreen(id = id)
             }
 
             composable(
@@ -110,6 +139,11 @@ private fun BottomBar(navController: NavHostController, modifier: Modifier = Mod
                 title = stringResource(id = R.string.menu_home),
                 icon = Icons.Default.Home,
                 screen = Screen.Home
+            ),
+            NavigationItem(
+                title = stringResource(id = R.string.menu_search),
+                icon = Icons.Default.Search,
+                screen = Screen.Search
             ),
             NavigationItem(
                 title = stringResource(id = R.string.menu_watch_list),
