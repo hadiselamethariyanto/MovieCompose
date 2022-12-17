@@ -12,6 +12,7 @@ import banyuwangi.digital.core.domain.usecase.tv.TvInteractor
 import banyuwangi.digital.core.domain.usecase.tv.TvUseCase
 import banyuwangi.digital.core.domain.usecase.watchlist.WatchlistInteractor
 import banyuwangi.digital.core.domain.usecase.watchlist.WatchlistUseCase
+import banyuwangi.digital.moviecompose.ui.screen.detail_collection.DetailCollectionViewModel
 import banyuwangi.digital.moviecompose.ui.screen.detail_movie.DetailMovieViewModel
 import banyuwangi.digital.moviecompose.ui.screen.detail_people.DetailPeopleViewModel
 import banyuwangi.digital.moviecompose.ui.screen.detail_tv.DetailTvViewModel
@@ -38,4 +39,5 @@ val viewModelModule = module {
     viewModel { DetailPeopleViewModel(get(), get()) }
     viewModel { WatchlistViewModel(get()) }
     viewModel { SearchViewModel(get()) }
+    viewModel { DetailCollectionViewModel(get(),get()) }
 }

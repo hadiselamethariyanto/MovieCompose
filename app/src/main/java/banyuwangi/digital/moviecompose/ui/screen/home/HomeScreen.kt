@@ -22,7 +22,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel(),
     navigateToMovieDetail: (Int) -> Unit,
     navigateToTvDetail: (Int) -> Unit,
-    navigateToPeopleDetail: (Int) -> Unit
+    navigateToPeopleDetail: (Int) -> Unit,
+    navigateToCollectionDetail: (Int, String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -38,7 +39,8 @@ fun HomeScreen(
                 popularPeople = state.popularPeople,
                 navigateToMovieDetail = navigateToMovieDetail,
                 navigateToTvDetail = navigateToTvDetail,
-                navigateToPeopleDetail = navigateToPeopleDetail
+                navigateToPeopleDetail = navigateToPeopleDetail,
+                navigateToCollectionDetail = navigateToCollectionDetail
             )
         }
 
@@ -67,7 +69,8 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     navigateToMovieDetail: (Int) -> Unit,
     navigateToTvDetail: (Int) -> Unit,
-    navigateToPeopleDetail: (Int) -> Unit
+    navigateToPeopleDetail: (Int) -> Unit,
+    navigateToCollectionDetail: (Int, String) -> Unit
 ) {
     MovieList(
         title = "Popular Movies",
@@ -75,7 +78,11 @@ fun HomeContent(
         navigateToMovieDetail = navigateToMovieDetail
     )
     Spacer(modifier = modifier.height(36.dp))
-    HorizontalCollectionList(title = "Collections", collections = collections)
+    HorizontalCollectionList(
+        title = "Collections",
+        collections = collections,
+        navigateToCollectionDetail = navigateToCollectionDetail
+    )
     Spacer(modifier = modifier.height(36.dp))
     HorizontalPeopleList(
         title = "Top Actors",

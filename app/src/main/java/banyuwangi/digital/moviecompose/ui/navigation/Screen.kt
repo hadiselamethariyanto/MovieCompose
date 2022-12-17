@@ -17,12 +17,16 @@ sealed class Screen(val route: String) {
         fun createRoute(id: Int) = "home/people/$id"
     }
 
-    object DetailSearch:Screen("search/{id}"){
-        fun createRoute(id:Int) = "search/$id"
+    object DetailSearch : Screen("search/{id}") {
+        fun createRoute(id: Int) = "search/$id"
     }
 
-    object DetailWatchlist:Screen("watchlist/{id}"){
-        fun createRoute(id:Int) = "watchlist/$id"
+    object DetailWatchlist : Screen("watchlist/{id}") {
+        fun createRoute(id: Int) = "watchlist/$id"
+    }
+
+    object DetailCollection : Screen("collection/{id}/{name}") {
+        fun createRoute(id: Int, name: String) = "collection/$id/$name"
     }
 
 

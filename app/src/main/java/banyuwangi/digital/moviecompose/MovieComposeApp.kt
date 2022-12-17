@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import banyuwangi.digital.moviecompose.ui.navigation.NavigationItem
 import banyuwangi.digital.moviecompose.ui.navigation.Screen
+import banyuwangi.digital.moviecompose.ui.screen.detail_collection.DetailCollectionScreen
 import banyuwangi.digital.moviecompose.ui.screen.detail_movie.DetailMovieScreen
 import banyuwangi.digital.moviecompose.ui.screen.detail_people.DetailPeopleScreen
 import banyuwangi.digital.moviecompose.ui.screen.detail_tv.DetailTvScreen
@@ -65,6 +66,9 @@ fun MovieComposeApp(
                     },
                     navigateToPeopleDetail = { id ->
                         navController.navigate(Screen.DetailPeople.createRoute(id))
+                    },
+                    navigateToCollectionDetail = { id, name ->
+                        navController.navigate(Screen.DetailCollection.createRoute(id, name))
                     }
                 )
             }
@@ -84,6 +88,16 @@ fun MovieComposeApp(
                 WatchlistScreen(navigateToMovieDetail = { id ->
                     navController.navigate(Screen.DetailWatchlist.createRoute(id))
                 })
+            }
+            composable(
+                route = Screen.DetailCollection.route,
+                arguments = listOf(
+                    navArgument("id") { type = NavType.IntType },
+                    navArgument("name") { type = NavType.StringType })
+            ) {
+                val id = it.arguments?.getInt("id") ?: 0
+                val name = it.arguments?.getString("name") ?: ""
+                DetailCollectionScreen(id = id, name = name)
             }
             composable(
                 route = Screen.DetailMovie.route,

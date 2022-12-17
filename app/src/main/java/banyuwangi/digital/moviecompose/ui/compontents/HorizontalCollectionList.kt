@@ -1,5 +1,6 @@
 package banyuwangi.digital.moviecompose.ui.compontents
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -21,13 +22,22 @@ import banyuwangi.digital.moviecompose.ui.theme.gilroySemiBold
 fun HorizontalCollectionList(
     title: String,
     collections: List<CollectionDomain>,
+    navigateToCollectionDetail: (Int, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Text(text = title, fontSize = 16.sp, fontFamily = gilroySemiBold, color = Color.White)
     Spacer(modifier = modifier.height(16.dp))
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         items(collections, key = { it.id }) { collection ->
-            CollectionItem(title = collection.name, photoUrl = collection.backdropPath)
+            CollectionItem(
+                title = collection.name,
+                photoUrl = collection.backdropPath,
+                modifier = Modifier.clickable {
+                    navigateToCollectionDetail(
+                        collection.id,
+                        collection.name
+                    )
+                })
         }
     }
 }
@@ -36,6 +46,9 @@ fun HorizontalCollectionList(
 @Composable
 fun HorizontalCollectionListPreview() {
     MovieComposeTheme {
-        HorizontalCollectionList("Collections", FakeData.collections)
+        HorizontalCollectionList(
+            "Collections",
+            FakeData.collections,
+            navigateToCollectionDetail = { id, name -> })
     }
 }
